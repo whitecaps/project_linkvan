@@ -170,9 +170,9 @@
       </li>
       <li>
         <% if @facility.services.include? "Learning" %>
-        <input type="checkbox" class="custom-checkbox" id="lcheck" name="Learning" value="Learning" onclick="lchecked()" checked>
+        <input type="checkbox" class="custom-checkbox" id="lcheck" name="Learning" value="Learning" onclick="lclicked()" checked>
         <% else %>
-        <input type="checkbox" class="custom-checkbox" id="lcheck" name="Learning" value="Learning" onclick="lchecked()">
+        <input type="checkbox" class="custom-checkbox" id="lcheck" name="Learning" value="Learning" onclick="lclicked()">
         <% end %>
         <label for="lcheck">Learning</label>
       </li>
@@ -180,6 +180,42 @@
     <% end %>
   </div>
 
+  <hr>
+  <div class="form-group" id="service_notes">
+    <p>
+        <b>Service Notes</b> - Add any notes relevant to specific services such as special hours, or eligibility concerns.<br>
+        Eg: "<i>Lunch served between 11:30am and 1:30pm</i>"
+    </p>
+    <div id="shelter_note" class="col-md-4">
+        <%= f.label :shelter_note, "Shelter" %>
+        <%= f.text_area :shelter_note, rows: 7, class: "form-control" %>
+    </div>
+    <div id="food_note" class="col-md-4">
+        <%= f.label :food_note, "Food" %>
+        <%= f.text_area :food_note, rows: 7, class: "form-control" %>
+    </div>
+    <div id="medical_note" class="col-md-4">
+        <%= f.label :medical_note, "Medical" %>
+        <%= f.text_area :medical_note, rows: 7, class: "form-control" %>
+    </div>
+    <div id="hygiene_note" class="col-md-4">
+        <%= f.label :hygiene_note, "Hygiene" %>
+        <%= f.text_area :hygiene_note, rows: 7, class: "form-control" %>
+    </div>
+    <div id="technology_note" class="col-md-4">
+        <%= f.label :technology_note, "Technology" %>
+        <%= f.text_area :technology_note, rows: 7, class: "form-control" %>
+    </div>
+    <div id="legal_note" class="col-md-4">
+        <%= f.label :legal_note, "Legal" %>
+        <%= f.text_area :legal_note, rows: 7, class: "form-control" %>
+    </div>
+    <div id="learning_note" class="col-md-4">
+        <%= f.label :learning_note, "Learning" %>
+        <%= f.text_area :learning_note, rows: 7, class: "form-control" %>
+    </div>
+  </div>
+  <div class="clearfix"></div>
   <hr>
 
   <div class="form-group">
@@ -602,11 +638,13 @@ function sclicked(){
   scheck = document.getElementById('scheck');
   if(scheck.checked){
     finalservices.push(scheck.value);
+    $('div#shelter_note').show();
   }else{
     index = finalservices.indexOf(scheck.value);
     if (index > -1) {
       finalservices.splice(index, 1);
     }
+    $('div#shelter_note').hide();
   }
   document.getElementById('facility_services').value = finalservices.join(' ');
 };
@@ -616,11 +654,13 @@ function fclicked(){
   fcheck = document.getElementById('fcheck');
   if(fcheck.checked){
     finalservices.push(fcheck.value);
+    $('div#food_note').show();
   }else{
     index = finalservices.indexOf(fcheck.value);
     if (index > -1) {
       finalservices.splice(index, 1);
     }
+    $('div#food_note').hide();
   }
   document.getElementById('facility_services').value = finalservices.join(' ');
 };
@@ -630,11 +670,13 @@ function mclicked(){
   mcheck = document.getElementById('mcheck');
   if(mcheck.checked){
     finalservices.push(mcheck.value);
+    $('div#medical_note').show();
   }else{
     index = finalservices.indexOf(mcheck.value);
     if (index > -1) {
       finalservices.splice(index, 1);
     }
+    $('div#medical_note').hide();
   }
   document.getElementById('facility_services').value = finalservices.join(' ');
 };
@@ -644,11 +686,13 @@ function hclicked(){
   hcheck = document.getElementById('hcheck');
   if(hcheck.checked){
     finalservices.push(hcheck.value);
+    $('div#hygiene_note').show();
   }else{
     index = finalservices.indexOf(hcheck.value);
     if (index > -1) {
       finalservices.splice(index, 1);
     }
+    $('div#hygiene_note').hide();
   }
   document.getElementById('facility_services').value = finalservices.join(' ');
 };
@@ -658,11 +702,13 @@ function tclicked(){
   tcheck = document.getElementById('tcheck');
   if(tcheck.checked){
     finalservices.push(tcheck.value);
+    $('div#technology_note').show();
   }else{
     index = finalservices.indexOf(tcheck.value);
     if (index > -1) {
       finalservices.splice(index, 1);
     }
+    $('div#technology_note').hide();
   }
   document.getElementById('facility_services').value = finalservices.join(' ');
 };
@@ -672,11 +718,13 @@ function aclicked(){
   acheck = document.getElementById('acheck');
   if(acheck.checked){
     finalservices.push(acheck.value);
+    $('div#legal_note').show();
   }else{
     index = finalservices.indexOf(acheck.value);
     if (index > -1) {
       finalservices.splice(index, 1);
     }
+    $('div#legal_note').hide();
   }
   document.getElementById('facility_services').value = finalservices.join(' ');
 };
@@ -686,26 +734,26 @@ function lclicked(){
   lcheck = document.getElementById('lcheck');
   if(lcheck.checked){
     finalservices.push(lcheck.value);
+    $('div#learning_note').show();
   }else{
     index = finalservices.indexOf(lcheck.value);
     if (index > -1) {
       finalservices.splice(index, 1);
     }
+    $('div#learning_note').hide();
   }
   document.getElementById('facility_services').value = finalservices.join(' ');
 };
 
-
-};
-
-sclicked();
-fclicked();
-mclicked();
-hclicked();
-tclicked();
-aclicked();
-lclicked();
-
+$(document).ready(function(){
+    sclicked();
+    fclicked();
+    mclicked();
+    hclicked();
+    tclicked();
+    aclicked();
+    lclicked();
+});
 
 var monhours = document.getElementById("mon-hours");
 var tueshours = document.getElementById("tues-hours");
