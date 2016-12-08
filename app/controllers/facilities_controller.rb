@@ -2,7 +2,7 @@ class FacilitiesController < ApplicationController
   before_action :require_signin, only: [:edit, :update, :new, :create, :destroy]
   before_filter :require_admin, only: :permit
   #use impressionist to log views to display on user show page
-
+  include FacilitiesHelper
   def index
     @facilities = Facility.all
   end
@@ -172,11 +172,16 @@ class FacilitiesController < ApplicationController
 
   def search
     if params[:search]
-      @facilities = Facility.search(params[:search])
+      if isKeyword
+        keywordSearch(getKeyword(params[:search]))
+      else
+        @facilities = Facility.search(params[:search]).where(:verified => true)
+      end
     else
-      @facilities = Facility.all
+      @facilities = Facility.all.where(:verified => true)
     end
   end
+
 
 
 	def show
