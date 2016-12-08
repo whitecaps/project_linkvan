@@ -1,0 +1,30 @@
+<%= render 'facilities/nav' %>
+
+<h1 style="text-align: center; margin-top: 50px; margin-bottom: -30px; font-weight: bold">Change Permissions</h1>
+
+<div class="profile">
+	<%= form_for(@facility) do |f| %>
+		<p>
+			<strong>Allow a user to edit this facility's details.</strong>
+			<br><br>
+			Facility: <%= @facility.name %>
+		</p>
+
+		<p>
+			<% 
+			users = Array.new
+			User.where(admin: nil).each {|user| 
+				userinfo = Array.new
+				userinfo << user.name << user.id
+				users << userinfo
+			} 
+			%>
+
+			<%= select_tag(:user, options_for_select(users), :include_blank => "Select user") %>
+		</p>
+
+		<p>
+		<%= f.submit %>
+		</p>
+	<% end %>
+</div>
