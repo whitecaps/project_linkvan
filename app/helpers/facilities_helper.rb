@@ -120,7 +120,6 @@ module FacilitiesHelper
 				when "Training_Services"
 					content_arr += content_tag(:i, nil, class: "icon-training_services_linkvan service", id: "Training",  onclick: "moreInfo('training');")
 				#else add error case?
-
 			end #ends case
 		end
 

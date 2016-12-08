@@ -14,6 +14,7 @@ Linkvan::Application.routes.draw do
   resources :users
 
   get 'facilities/options', to: 'facilities#options'
+  get 'facilities/:id/permit' => "facilities#permit", as: :permit_facility
   get 'facilities/directions/:id', to: 'facilities#directions'
   get "facilities/filter/:scope" => "facilities#filtered", as: :filtered_facilities
   get 'facilities/filter/:scope/:latitude&:longitude', to: 'facilities#filtered', as: :coords_facilities

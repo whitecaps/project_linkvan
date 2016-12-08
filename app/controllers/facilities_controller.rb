@@ -1,5 +1,6 @@
 class FacilitiesController < ApplicationController
   before_action :require_signin, only: [:edit, :update, :new, :create, :destroy]
+  before_filter :require_admin, only: :permit
   #use impressionist to log views to display on user show page
 
   def index
@@ -207,13 +208,28 @@ class FacilitiesController < ApplicationController
 		@facility = Facility.find(params[:id])
 	end
 
+  def permit
+    @facility = Facility.find(params[:id])
+  end
+
 	def update
 		@facility = Facility.find(params[:id])
-		if @facility.update(facility_params)
-      Status.create(fid: @facility.id, changetype: "U")
-		  redirect_to @facility
+    if (params.has_key?(:user))
+      user = User.find_by id: params[:user]
+
+      @facility.user_id = user.id
+      @facility.save
+
+      user.facilities << @facility
+
+      redirect_to @facility
     else
-      render :edit
+  		if @facility.update(facility_params)
+        Status.create(fid: @facility.id, changetype: "U")
+  		  redirect_to @facility
+      else
+        render :edit
+      end
     end
 	end
 
